@@ -1,5 +1,5 @@
 # solaris-ui-lib
-The solaris ui library source code for Roblox
+The solaris ui library source code for Roblox. Removed the music feature bc it was bloat.
 
 # Loadstring
 ```lua
