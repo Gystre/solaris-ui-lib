@@ -264,7 +264,7 @@ function SolarisLib:New(Config)
     local MenuBtnPreset = game:GetObjects("rbxassetid://7037141226")[1]
     local SettingsBtn = MenuBtnPreset:Clone()
     SettingsBtn.Parent = MFrame.TopBar.ButtonHolder.MenuBtn.MenuFrame
-    SettingsBtn.Position = UDim2.new(0, 0, 0, 25)
+    SettingsBtn.Position = UDim2.new(0, 0, 0, 0)
     SettingsBtn.Text = "Settings"
     SettingsBtn.MouseEnter:Connect(function()
         TweenService:Create(SettingsBtn, TweenInfo.new(0.15,
