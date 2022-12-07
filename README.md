@@ -100,7 +100,7 @@ local label = sec:Label("Label")
 --[[
 label:Set(text <string>)
 ]]
-local tab2 = win:Tab("Tab 2")```
+local tab2 = win:Tab("Tab 2")
 ```
 
 # Source
