@@ -161,10 +161,10 @@ local SolarisLib = {
 }
 
 local MainUI = game:GetObjects("rbxassetid://7835727566")[1]
-print("SolarisLib Loaded!")
 local function MakeDraggable(topbarobject, object)
     pcall(function()
-        local dragging, dragInput, mousePos, framePos = false
+        local dragging = false
+        local dragInput, mousePos, framePos = nil, nil, nil
         topbarobject.InputBegan:Connect(function(input)
             if input.UserInputType == Enum.UserInputType.MouseButton1 then
                 dragging = true
@@ -1439,7 +1439,7 @@ function SolarisLib:New(Config)
                             HueSelection.Position = UDim2.new(0.48, 0, HueY, 0)
                             ColorH = 1 - HueY
 
-                            UpdateColorPicker(true)
+                            UpdateColorPicker()
                         end)
                     end
                 end)
@@ -1489,18 +1489,23 @@ function SolarisLib:New(Config)
 
                 return Label
             end
-            function ItemHold:Textbox(text, disappear, callback)
+            function ItemHold:Textbox(text, initialText, disappear, callback)
                 local Textbox, TextboxFrame = {}, game:GetObjects(
                                                   "rbxassetid://7147292392")[1]
                 TextboxFrame.Parent = Section
                 TextboxFrame.Title.Text = text
                 TextboxFrame.Name = text .. "element"
 
+                if initialText then
+                    TextboxFrame.Box.Text = initialText
+                else
+                    TextboxFrame.Box.PlaceholderText = "                  "
+                end
+
                 TextboxFrame.Box.Changed:Connect(function()
                     TextboxFrame.Box.Size =
                         UDim2.new(0, TextboxFrame.Box.TextBounds.X + 16, 0, 22)
                 end)
-                TextboxFrame.Box.PlaceholderText = "                  "
 
                 TextboxFrame.InputBegan:Connect(function(input)
                     if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -1538,6 +1543,12 @@ function SolarisLib:New(Config)
                                 .TextColor
                     end
                 end)
+
+                function Textbox:Set(newText)
+                    TextboxFrame.Box.Text = newText
+                    return callback(newText)
+                end
+
                 return Textbox
             end
             function ItemHold:Bind(text, preset, holdmode, flag, callback)

@@ -1,108 +1,159 @@
 # solaris-ui-lib
-The solaris ui library source code for Roblox. Removed the music feature bc it was bloat.
+
+The solaris ui library source code for Roblox but modified to my tastes. Removed the music feature bc it was bloat.
 
 # Loadstring
+
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Gystre/solaris-ui-lib/main/source.lua"))()
+local SolarisLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Gystre/solaris-ui-lib/main/source.lua"))()
 ```
 
 # UI Preview
+
 <img src="./media/VuBircv.png" width="45%" height="45%">
 
 # Library Preview
+
 ```lua
 local SolarisLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/Gystre/solaris-ui-lib/main/source.lua"))()
 
---[[SolarisLib:New({
-   Name - Title of the UI <string>
-   FolderToSave - Name of the folder where the UI files will be stored <string>
+--[[
+Usage:
+   SolarisLib:New({
+      Name - Title of the UI <string>
+      FolderToSave - Name of the folder where the UI files will be stored <string>
 })]]
-local win = SolarisLib:New({
+local Win = SolarisLib:New({
    Name = "SolarisLib",
    FolderToSave = "SolarisLibStuff"
 })
 
---win:Tab(title <string>)
-local tab = win:Tab("Tab 1")
+--Win:Tab(title <string>)
+local Tab = Win:Tab("Tab 1")
 
---tab:Section(title <string>)
-local sec = tab:Section("Elements")
+--Tab:Section(title <string>)
+local Sec = Tab:Section("Elements")
 
---sec:Button(title <string>, callback <function>)
-sec:Button("Button", function()
+--Sec:Button(title <string>, callback <function>)
+Sec:Button("Button", function()
    SolarisLib:Notification("Test", "This is a notification test.")
 end)
 
---sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
-local toggle = sec:Toggle("Toggle", false,"Toggle", function(t)
+--[[
+Usage:
+   Sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
+
+Member functions:
+   -- Set the boolean state for the toggle button
+   Toggle:Set(state <boolean>)
+]]
+local Toggle = Sec:Toggle("Toggle", false,"Toggle", function(t)
+   print(t)
+end)
+
+
+--[[
+Usage:
+   Sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
+
+Member functions:
+   -- Sets the slider's value
+   Slider:Set(state <number>)
+]]
+--
+local Slider = Sec:Slider("Slider", 0,25,0,2.5,"Slider", function(t)
+   print(t)
+end)
+
+
+--[[
+Usage:
+   Sec:Dropdown(title <string>,options <Table>,default <string>, flag <string>, callback <function>)
+
+Member functions:
+   -- Refresh the list of available dropdowns
+   Dropdown:Refresh(options <Table>, deletecurrent <boolean>)
+
+   -- Set the title text of the dropdown
+   Dropdown:Set(option <string>)
+
+]]
+local Dropdown = Sec:Dropdown("Dropdown", {"a","b","c","d","e"},"","Dropdown", function(t)
+   print(t)
+end)
+
+
+--[[
+Usage:
+   Sec:MultiDropdown(title <string>,options <Table>,default <Table>, flag <string>, callback <function>)
+
+Member functions:
+   -- Refresh the list of available dropdowns
+   MultiDropdown:Refresh(options <Table>, deletecurrent <boolean>)
+
+   -- Set a set of options for the dropdown
+   MultiDropdown:Set(option <Table>)
+]]
+local MultiDropdown = Sec:MultiDropdown("Multi Dropdown", {"a","b","c","d","e"},{"b", "c"},"Dropdown", function(t)
+   print(Table.concat(t, ", "))
+end)
+
+
+--[[
+Usage:
+   Sec:Colorpicker(title <string>, default <color3>, flag <string>, callback <function>)
+]]
+Sec:Colorpicker("Colorpicker", Color3.fromRGB(255,255,255),"Colorpicker", function(t)
    print(t)
 end)
 
 --[[
-toggle:Set(state <boolean>)
-]]
+Usage:
+   Sec:Textbox(title <string>, initialText <string>, disappear <boolean>, callback <function>)
 
---sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
-local slider = sec:Slider("Slider", 0,25,0,2.5,"Slider", function(t)
+Member functions:
+   -- Set the input text and call the callback
+   Textbox:Set(newText <string>)
+
+Note:
+   Disappear will clear the input text once the user clicks out of the TextBox
+]]
+Sec:Textbox("Textbox", "I come preinstalled!", false, function(t)
    print(t)
 end)
 
 --[[
-slider:Set(state <number>)
+Usage:
+   Sec:Bind(title <string>, default <keycode>, hold <boolean>, flag <string>, callback <function>)
+
+Member functions:
+   -- Set a new keybind
+   bind:Set(state <keycode>)
 ]]
-
---sec:Dropdown(title <string>,options <table>,default <string>, flag <string>, callback <function>)
-local dropdown = sec:Dropdown("Dropdown", {"a","b","c","d","e"},"","Dropdown", function(t)
+Sec:Bind("Hold Bind", Enum.KeyCode.E, true, "BindHold", function(t)
    print(t)
 end)
 
---[[
-Dropdown:Refresh(options <table>, deletecurrent <boolean>)
-Dropdown:Set(option <string>)
-]]
-
---sec:MultiDropdown(title <string>,options <table>,default <table>, flag <string>, callback <function>)
-local multidropdown =sec:MultiDropdown("Multi Dropdown", {"a","b","c","d","e"},{"b", "c"},"Dropdown", function(t)
-   print(table.concat(t, ", "))
-end)
-
---[[
-Dropdown:Refresh(options <table>, deletecurrent <boolean>)
-Dropdown:Set(option <table>)
-]]
-
---sec:Colorpicker(title <string>, default <color3>, flag <string>, callback <function>)
-sec:Colorpicker("Colorpicker", Color3.fromRGB(255,255,255),"Colorpicker", function(t)
-   print(t)
-end)
-
---sec:Textbox(title <string> ,disappear <boolean>, callback <function>)
-sec:Textbox("Textbox", true, function(t)
-   print(t)
-end)
-
---sec:Bind(title <string>, default <keycode>, hold <boolean>, flag <string>, callback <function>)
-sec:Bind("Hold Bind", Enum.KeyCode.E, true, "BindHold", function(t)
-   print(t)
-end)
-
-sec:Bind("Normal Bind", Enum.KeyCode.F, false, "BindNormal", function()
+Sec:Bind("Normal Bind", Enum.KeyCode.F, false, "BindNormal", function()
    print("Bind pressed")
 end)
 
---[[
-bind:Set(state <keycode>)
-]]
-
---sec:Label(text <string>)
-local label = sec:Label("Label")
 
 --[[
-label:Set(text <string>)
+Usage:
+   Sec:Label(text <string>)
+
+Member functions:
+   -- Set the title text of the label
+   label:Set(text <string>)
 ]]
-local tab2 = win:Tab("Tab 2")
+local Label = Sec:Label("Label")
+
+local Tab2 = Win:Tab("Tab 2")
 ```
 
 # Source
+
 #### The code was originally created by Solaris Software.
-- An archived version of the code was found from [here](https://raw.githubusercontent.com/Stebulous/solaris-ui-lib/main/source.lua)!
+
+-   An archived version of the code was found from [here](https://raw.githubusercontent.com/Stebulous/solaris-ui-lib/main/source.lua)!
