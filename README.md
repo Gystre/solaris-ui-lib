@@ -1,6 +1,6 @@
 # solaris-ui-lib
 
-The solaris ui library source code for Roblox but modified to my tastes. Removed the music feature bc it was bloat.
+The solaris ui library source code for Roblox but modified to my tastes. Removed the music feature bc it was bloat. Still has the problem of a slow initialization so maybe i'll look into it later.
 
 # Loadstring
 
@@ -41,20 +41,21 @@ end)
 
 --[[
 Usage:
-   Sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function>)
+   Sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function(t: boolean)>)
 
 Member functions:
    -- Set the boolean state for the toggle button
    Toggle:Set(state <boolean>)
 ]]
 local Toggle = Sec:Toggle("Toggle", false,"Toggle", function(t)
+   print("In the Toggle callback!")
    print(t)
 end)
 
 
 --[[
 Usage:
-   Sec:Slider(title <string>,default <number>,max <number>,minimum <number>,increment <number>, flag <string>, callback <function>)
+   Sec:Slider(title <string>, default <number>, max <number>, minimum <number>, increment <number>, flag <string>, callback <function(t: number)>)
 
 Member functions:
    -- Sets the slider's value
@@ -62,54 +63,59 @@ Member functions:
 ]]
 --
 local Slider = Sec:Slider("Slider", 0,25,0,2.5,"Slider", function(t)
+   print("In the Slider callback!")
    print(t)
 end)
 
 
 --[[
 Usage:
-   Sec:Dropdown(title <string>,options <Table>,default <string>, flag <string>, callback <function>)
+   Sec:Dropdown(title <string>, options <table>, default <string>, flag <string>, callback <function(t: string | number)>)
 
 Member functions:
    -- Refresh the list of available dropdowns
-   Dropdown:Refresh(options <Table>, deletecurrent <boolean>)
+   Dropdown:Refresh(options <table>, deletecurrent <boolean>)
 
    -- Set the title text of the dropdown
    Dropdown:Set(option <string>)
-
 ]]
 local Dropdown = Sec:Dropdown("Dropdown", {"a","b","c","d","e"},"","Dropdown", function(t)
+   print("In the Dropdown callback!")
    print(t)
 end)
 
 
 --[[
 Usage:
-   Sec:MultiDropdown(title <string>,options <Table>,default <Table>, flag <string>, callback <function>)
+   Sec:MultiDropdown(title <string>, options <table>, default <table>, flag <string>, callback <function(t: table)>)
 
 Member functions:
    -- Refresh the list of available dropdowns
-   MultiDropdown:Refresh(options <Table>, deletecurrent <boolean>)
+   MultiDropdown:Refresh(options <table>, deletecurrent <boolean>)
 
    -- Set a set of options for the dropdown
-   MultiDropdown:Set(option <Table>)
+   MultiDropdown:Set(option <table>)
 ]]
-local MultiDropdown = Sec:MultiDropdown("Multi Dropdown", {"a","b","c","d","e"},{"b", "c"},"Dropdown", function(t)
-   print(Table.concat(t, ", "))
+local MultiDropdown = Sec:MultiDropdown("Multi Dropdown", {1,"b","c","d","e"},{"b", "c"},"Dropdown", function(t)
+   print("In the MultiDropdown callback!")
+   for i, v in pairs(t) do
+        print(i, v)
+   end
 end)
 
 
 --[[
 Usage:
-   Sec:Colorpicker(title <string>, default <color3>, flag <string>, callback <function>)
+   Sec:Colorpicker(title <string>, default <color3>, flag <string>, callback <function(t: Roblox.Color3)>)
 ]]
 Sec:Colorpicker("Colorpicker", Color3.fromRGB(255,255,255),"Colorpicker", function(t)
+   print("In the colorpicker callback!")
    print(t)
 end)
 
 --[[
 Usage:
-   Sec:Textbox(title <string>, initialText <string>, disappear <boolean>, callback <function>)
+   Sec:Textbox(title <string>, initialText <string>, disappear <boolean>, callback <function(t: string)>)
 
 Member functions:
    -- Set the input text and call the callback
@@ -118,7 +124,8 @@ Member functions:
 Note:
    Disappear will clear the input text once the user clicks out of the TextBox
 ]]
-Sec:Textbox("Textbox", "I come preinstalled!", false, function(t)
+local Textbox = Sec:Textbox("Textbox", "I come preinstalled!", false, function(t)
+   print("In the Textbox callback!")
    print(t)
 end)
 

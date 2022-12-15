@@ -375,8 +375,8 @@ function SolarisLib:New(Config)
                 Container.Visible = true
             end)
             local TabHold = {}
-            function TabHold:ToggleSetting(title, desc, def, path)
-                local value = SolarisLib.Settings[path] or def
+            function TabHold:ToggleSetting(title, desc, default, path)
+                local value = SolarisLib.Settings[path] or default
                 local Toggle = TogglePreset:Clone()
                 Toggle.Parent = Container
                 Toggle.Title.Text = title
@@ -437,8 +437,8 @@ function SolarisLib:New(Config)
                     end
                 end)
             end
-            function TabHold:BindSetting(title, desc, def, path)
-                local value = SolarisLib.Settings[path] or def
+            function TabHold:BindSetting(title, desc, default, path)
+                local value = SolarisLib.Settings[path] or default
                 local Bind = BindPreset:Clone()
                 Bind.Parent = Container
                 Bind.Title.Text = title
@@ -499,9 +499,9 @@ function SolarisLib:New(Config)
                 end)
 
             end
-            function TabHold:Dropdown(title, desc, list, def, path)
+            function TabHold:Dropdown(title, desc, list, default, path)
                 local opened = false
-                local value = SolarisLib.Settings[path] or def
+                local value = SolarisLib.Settings[path] or default
                 local Dropdown = DropdownPreset:Clone()
                 Dropdown.Parent = Container
                 Dropdown.Title.Text = title
@@ -914,7 +914,7 @@ function SolarisLib:New(Config)
                 end)
 
             end
-            function ItemHold:Toggle(text, def, flag, callback)
+            function ItemHold:Toggle(text, default, flag, callback)
                 local Toggle, ToggleMain = {Value = false}, game:GetObjects(
                                                "rbxassetid://6963155498")[1]
                 ToggleMain.Parent = Section
@@ -972,7 +972,7 @@ function SolarisLib:New(Config)
                     end
                 end)
 
-                Toggle:Set(def)
+                Toggle:Set(default)
                 SolarisLib.Flags[flag] = Toggle
                 return Toggle
             end
@@ -1069,7 +1069,7 @@ function SolarisLib:New(Config)
                 SolarisLib.Flags[flag] = Slider
                 return Slider
             end
-            function ItemHold:Dropdown(text, list, def, flag, callback)
+            function ItemHold:Dropdown(text, list, default, flag, callback)
                 local Dropdown, DropMain, OptionPreset = {
                     Value = nil,
                     Toggled = false,
@@ -1186,11 +1186,11 @@ function SolarisLib:New(Config)
                 end)
 
                 Dropdown:Refresh(list, false)
-                Dropdown:Set(def)
+                Dropdown:Set(default)
                 SolarisLib.Flags[flag] = Dropdown
                 return Dropdown
             end
-            function ItemHold:MultiDropdown(text, list, def, flag, callback)
+            function ItemHold:MultiDropdown(text, list, default, flag, callback)
                 local Dropdown, DropMain, OptionPreset = {
                     Value = {},
                     Toggled = false,
@@ -1322,7 +1322,7 @@ function SolarisLib:New(Config)
                 end)
 
                 Dropdown:Refresh(list, false)
-                Dropdown:Set(def)
+                Dropdown:Set(default)
                 SolarisLib.Flags[flag] = Dropdown
                 return Dropdown
             end
