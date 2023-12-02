@@ -41,7 +41,7 @@ end)
 
 --[[
 Usage:
-   Sec:Toggle(title <string>,default <boolean>, flag <string>, callback <function(t: boolean)>)
+   Sec:Toggle(title <string>, default <boolean>, flag <string>, callback <function(t: boolean)>)
 
 Member functions:
    -- Set the boolean state for the toggle button
